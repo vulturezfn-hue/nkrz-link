@@ -27,6 +27,15 @@
   (function () {
     var q = new URLSearchParams(window.location.search);
     var state = q.get('state') || '';
+    // opened with nothing (someone just visited the site): show what this is
+    if (!state && !q.get('code') && !q.get('error')) {
+      document.querySelector('.spin').hidden = true;
+      document.querySelector('h1').textContent = 'NKRZ Streamer Rewards';
+      document.querySelector('p').innerHTML = 'Stream the NKRZ FiveM server on Twitch, Kick or TikTok and earn in-game coins. '
+        + 'Link your account in game with <b>/linkstream</b> or in our Discord with <b>/stream link</b>, then sign in to confirm the channel is yours.'
+        + '<br><br><a href="terms.html">Terms of Service</a> &middot; <a href="privacy.html">Privacy Policy</a> &middot; <a href="https://discord.gg/nkrz">Discord</a>';
+      return;
+    }
     var part = state.split('~')[1] || '';
     var server = '';
     try { server = atob(part.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((part.length + 3) % 4)); } catch (e) {}
